@@ -8,7 +8,7 @@ const app = express();
 
 // Constants
 const imgArr = [];
-const portNum = 8000;
+const portNum = 8080;
 const numImgs = 5;
 
 // Read through img directory and push file paths to array
@@ -40,7 +40,7 @@ const getRandImg = function () {
 }
 
 // Serve the image to the user
-// The '/' denotes the home path to be used: http://localhost:8000/ <-
+// The '/' denotes the home path to be used: http://localhost:8080/ <-
 app.get('/', function (req, res) {
     // Read in a random image file
     fs.readFile(getRandImg(), function (err, data) {

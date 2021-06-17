@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: picture-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: picture-server
+  template:
+    metadata:
+      labels:
+        app: picture-server
+    spec:
+      containers:
+      - name: picture-server
+        image: # TODO
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: picture-server-svc
+spec:
+  ports:
+    - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: picture-server
+---
+apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/v1beta1
+ kind: Ingress
+ metadata:
+   name: picture-server-ingress
+ spec:
+   rules:
+   - host: picture-server-zachariahderrick.local
+     http:
+       paths:
+       - path: /
+         backend:
+           serviceName: picture-server-svc
+           servicePort: 80
